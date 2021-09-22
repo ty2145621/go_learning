@@ -1,4 +1,4 @@
-package pkg
+package internal
 
 type IntMinHeap []int // 定义一个类型
 
