@@ -1,4 +1,4 @@
-package code_set1
+package leetcode_set1
 
 // 3. 无重复字符的最长子串
 

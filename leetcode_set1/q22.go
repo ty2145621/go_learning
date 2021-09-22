@@ -1,4 +1,4 @@
-package code_set1
+package leetcode_set1
 
 /**
 22. 括号生成

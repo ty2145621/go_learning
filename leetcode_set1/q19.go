@@ -1,4 +1,4 @@
-package code_set1
+package leetcode_set1
 
 /**
 19. 删除链表的倒数第N个节点

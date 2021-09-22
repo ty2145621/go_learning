@@ -1,4 +1,4 @@
-package code_set1
+package leetcode_set1
 
 /**
 20. 有效的括号
