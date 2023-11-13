@@ -102,6 +102,16 @@ func test1233() {
 	fmt.Printf("%d, %d\n", m["3"][3], m["4"][3])
 }
 
-func main() {
-	test1233()
+func sliceEqualNil() {
+	var a []int
+	var b = make([]int, 0)
+	fmt.Println(a == nil)
+	fmt.Println(b == nil)
+	fmt.Println(len(a) == 0)
+	fmt.Println(len(b) == 0)
 }
+
+/*func main() {
+	sliceEqualNil()
+}
+*/
