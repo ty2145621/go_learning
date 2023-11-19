@@ -33,14 +33,13 @@ func solve(grid [][]byte) int {
 	for _, v1 := range grid {
 		helper = append(helper, make([]bool, len(v1)))
 	}
-	count := 0
-	solve571(grid, helper, &count)
+	count, _ := solve571(grid, helper)
 	return count
 }
 
-func solve571(grid [][]byte, helper [][]bool, count *int) bool {
+func solve571(grid [][]byte, helper [][]bool) (count int, ok bool) {
 	if len(grid) == 0 {
-		return false
+		return 0, false
 	}
 	for i := 0; i < len(grid); i++ {
 		for j := 0; j < len(grid[0]); j++ {
@@ -48,22 +47,23 @@ func solve571(grid [][]byte, helper [][]bool, count *int) bool {
 				continue
 			}
 			if find571(grid, helper, i, j) {
-				*count++
+				count++
 			}
 		}
 	}
-	return true
+	return count, true
 }
 
 func find571(grid [][]byte, helper [][]bool, i, j int) bool {
-	if helper[i][j] {
-		return false
-	}
-	helper[i][j] = true
 	if i < 0 || i >= len(grid) || j < 0 || j >= len(grid[0]) {
 		return false
 	}
 
+	if helper[i][j] {
+		return false
+	}
+	helper[i][j] = true
+	
 	if grid[i][j] != '1' {
 		return false
 	}

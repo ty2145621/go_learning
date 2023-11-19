@@ -29,3 +29,43 @@ func TestInversePairs(t *testing.T) {
 		})
 	}
 }
+
+func Test_lowbit(t *testing.T) {
+	type args struct {
+		x int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "",
+			args: args{
+				x: 11,
+			},
+			want: 1,
+		},
+		{
+			name: "",
+			args: args{
+				x: 12,
+			},
+			want: 4,
+		},
+		{
+			name: "",
+			args: args{
+				x: 16,
+			},
+			want: 16,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := lowbit(tt.args.x); got != tt.want {
+				t.Errorf("lowbit() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

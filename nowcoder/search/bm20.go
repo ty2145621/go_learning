@@ -1,5 +1,9 @@
 package search
 
+import (
+	"sort"
+)
+
 /**
 BM20 数组中的逆序对
 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P mod 1000000007
@@ -88,3 +92,51 @@ func mergeSort(nums []int, start, mid, end int) (count int) {
 
 	return count
 }
+
+
+func lowbit(x int) int {
+	return x&(-x)
+}
+
+func queryN(tree []int, n int) int64 {
+	var ans int64
+	for n > 0 {
+		ans += int64(tree[n])
+		n -= lowbit(n)
+	}
+	return ans
+} 
+
+func update(tree []int, n int) {
+	for ;n < len(tree); n += lowbit(n) {
+		tree[n]++
+	}
+}
+
+func query(tree []int,a, b int) int64 {
+	return queryN(tree, b) - queryN(tree, a)
+}
+func InversePairs2(data []int) int {
+	tree := make([]int, len(data))
+
+	for k, v := range data {
+		tree[k] = v
+	}
+
+	sort.Ints(tree)
+	m := make(map[int]int, 2*len(tree))
+	for k, v := range tree {
+		m[v] = k+1
+	}
+
+	var ans int64
+	tree = make([]int, len(data) + 1)
+	for i := len(data) - 1; i >= 0; i-- {
+		k := m[data[i]]
+		ans += queryN(tree, k)
+		update(tree, k)
+	}
+
+	return int(ans % 1000000007)
+}
+
