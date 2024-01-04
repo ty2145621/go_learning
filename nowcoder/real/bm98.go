@@ -17,18 +17,51 @@ BM98 螺旋矩阵
 数据范围：0 \le n,m \le 100≤n,m≤10，矩阵中任意元素都满足 |val| \le 100∣val∣≤100
 要求：空间复杂度 O(nm)O(nm) ，时间复杂度 O(nm)O(nm)
 */
+
 func spiralOrder(matrix [][]int) []int {
+	if len(matrix) == 0 {
+		return []int{}
+	}
+	res := []int{}
+	top, bottom, left, right := 0, len(matrix)-1, 0, len(matrix[0])-1
+
+	for top <= bottom && left <= right {
+		for i := left; i <= right; i++ {
+			res = append(res, matrix[top][i])
+		}
+		top++
+		for i := top; i <= bottom; i++ {
+			res = append(res, matrix[i][right])
+		}
+		right--
+		if top > bottom || left > right {
+			break
+		}
+		for i := right; i >= left; i-- {
+			res = append(res, matrix[bottom][i])
+		}
+		bottom--
+		for i := bottom; i >= top; i-- {
+			res = append(res, matrix[i][left])
+		}
+		left++
+	}
+
+	return res
+}
+
+func spiralOrder3(matrix [][]int) []int {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return []int{}
 	}
 
 	res := make([]int, 0)
-	res = spiralOrder2(matrix, 0, len(matrix[0])-1, len(matrix)-1, 0, res)
+	res = spiralOrder31(matrix, 0, len(matrix[0])-1, len(matrix)-1, 0, res)
 
 	return res
 }
 
-func spiralOrder2(matrix [][]int, up, r, down, l int, res []int) []int {
+func spiralOrder31(matrix [][]int, up, r, down, l int, res []int) []int {
 	if up == down || l == r { // 最后一行、列
 		if up == down {
 			for i := l; i <= r; i++ {
@@ -60,5 +93,5 @@ func spiralOrder2(matrix [][]int, up, r, down, l int, res []int) []int {
 	for i := down; i > up; i-- {
 		res = append(res, matrix[i][l])
 	}
-	return spiralOrder2(matrix, up+1, r-1, down-1, l+1, res)
+	return spiralOrder31(matrix, up+1, r-1, down-1, l+1, res)
 }

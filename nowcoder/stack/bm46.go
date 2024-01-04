@@ -27,7 +27,6 @@ func (h *IntMaxHeap) Push(x interface{}) { // 绑定push方法，插入新元素
 }
 
 func (h *IntMaxHeap) Top() int {
-	// return (*h)[len(*h)/2-1]
 	return (*h)[0]
 }
 

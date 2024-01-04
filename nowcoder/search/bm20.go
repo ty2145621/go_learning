@@ -1,5 +1,12 @@
 package search
 
+import (
+	"fmt"
+	"sort"
+
+	"go_learning/internal"
+)
+
 /**
 BM20 数组中的逆序对
 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P mod 1000000007
@@ -32,9 +39,31 @@ BM20 数组中的逆序对
 0
 */
 
+func InversePairs(data []int) int {
+	sortedArr := make([]int, len(data))
+	copy(sortedArr, data)
+	sort.Ints(sortedArr)
+
+	findMap := make(map[int]int, 2*len(data))
+	for k, v := range sortedArr {
+		findMap[v] = k + 1 // bit 的index
+	}
+
+	var count int64
+	tree := internal.NewBIT(len(data))
+	for i := len(data) - 1; i >= 0; i-- {
+		n := findMap[data[i]]
+		count += tree.QueryN(n)
+		tree.Update(n, 1)
+		fmt.Println(tree)
+	}
+
+	return int(count % 1000000007)
+}
+
 var res []int
 
-func InversePairs(data []int) int {
+func InversePairs2(data []int) int {
 	res = make([]int, len(data))
 	mid := len(data) / 2
 

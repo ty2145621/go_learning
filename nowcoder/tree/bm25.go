@@ -50,8 +50,34 @@ func postorder2(root *TreeNode, nums []int) []int {
 			m[top] = struct{}{}
 		}
 	}
-
 	return nums
+}
+
+// postorder2Change 需要存储已经遍历过右子树的父节点，map判断用了for循环
+func postorder2Change(root *TreeNode) []int {
+	arr := make([]int, 0, 256)
+	cur := root
+	stack := list.New()
+	viewMap := make(map[*TreeNode]bool)
+
+	for stack.Len() > 0 || cur != nil {
+		for cur != nil {
+			stack.PushBack(cur)
+			cur = cur.Left
+		}
+		cur = stack.Back().Value.(*TreeNode)
+		for viewMap[cur] {
+			arr = append(arr, cur.Val)
+			stack.Remove(stack.Back())
+			if stack.Len() == 0 {
+				return arr
+			}
+			cur = stack.Back().Value.(*TreeNode)
+		}
+		viewMap[cur] = true
+		cur = cur.Right
+	}
+	return arr
 }
 
 // postorder3 相比2，实际上只需要存储本次处理的子树的root节点就好
